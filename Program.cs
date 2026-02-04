@@ -145,6 +145,122 @@
     }
 }
 
+// Barebones Task class
+class Task
+{
+    // Properties
+    string _title;
+    CompletionStatus _status;
+
+    // Methods
+    string Title()
+    {
+        return "";
+    }
+    void SetTitle(string title)
+    {
+        
+    }
+    CompletionStatus Status()
+    {
+        return CompletionStatus.Incomplete;
+    }
+    void ToggleStatus()
+    {
+        
+    }
+
+    // Constructor
+    public Task(string title)
+    {
+        _title = title;
+        _status = CompletionStatus.Incomplete;
+    }
+
+    // Enumeration
+    enum CompletionStatus {Incomplete, Complete}
+}
+
+// Barebones TodoList class
+class TodoList
+{
+    // Properties
+    List<Task> _tasks;
+    int _selectedIndex;
+
+    // Methods
+    void SwapTasksAt(int i, int j)
+    {
+    }
+
+    int WrappedIndex(int index)
+    {
+        return 1;
+    }
+
+    int PreviousIndex()
+    {
+        return 1;
+    }
+
+    int NextIndex()
+    {
+        return 1;
+    }
+
+    void SelectPrevious()
+    {
+        
+    }
+
+    void SelectNext()
+    {
+        
+    }
+
+    void SwapWithPrevious()
+    {
+        
+    }
+
+    void SwapWithNext()
+    {
+        
+    }
+
+    void Insert(string title)
+    {
+        
+    }
+
+    void UpdateSelectedTitle(string title)
+    {
+        
+    }
+
+    int Length()
+    {
+        return 1;
+    }
+
+    void DeleteSelected()
+    {
+        
+    }
+
+    Task CurrentTask()
+    {
+        return new Task("Title");
+    }
+
+    Task GetTask(int index)
+    {
+        return new Task("Title");
+    }
+    // Constructor
+    // Enumeration
+}
+
 class Program
 {
     static void Main()
