@@ -84,6 +84,7 @@
         return Console.ReadLine()!;
     }
 
+    // Handles all user input collection, uses _insertMode to determine what kind of input we should get
     public void ProcessUserInput()
     {
         // If we're in insert mode, we get a string from the user
