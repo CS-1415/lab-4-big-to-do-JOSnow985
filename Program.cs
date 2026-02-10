@@ -1,15 +1,15 @@
 ﻿class TodoListApp
 {
-    // private TodoList _tasks;
+    private TodoList _tasks;
     private bool _showHelp = true;
     private bool _insertMode = true;
     private bool _quit = false;
 
     // Constructor wants a TodoList passed
-    // public TodoListApp(TodoList tasks)
-    // {
-    //     _tasks = tasks;
-    // }
+    public TodoListApp(TodoList tasks)
+    {
+        _tasks = tasks;
+    }
 
     // Method to loop the program until we're quitting
     public void Run()
@@ -98,7 +98,7 @@
             }
             else
             {
-                // _tasks.Insert(taskTitle);
+                _tasks.Insert(taskTitle);
             }
         }
         else
@@ -121,9 +121,9 @@
                 // case ConsoleKey.RightArrow:
                 //     _tasks.SwapWithNext();
                 //     break;
-                // case ConsoleKey.I:
-                //     _insertMode = true;
-                //     break;
+                case ConsoleKey.I:
+                    _insertMode = true;
+                    break;
                 // case ConsoleKey.E:
                 //     _tasks.CurrentTask.Title = GetTitle();
                 //     break;
@@ -153,21 +153,13 @@ class Task
     CompletionStatus _status;
 
     // Methods
-    string Title()
-    {
-        return "";
-    }
-    void SetTitle(string title)
-    {
-        
-    }
-    CompletionStatus Status()
-    {
-        return CompletionStatus.Incomplete;
-    }
+    string Title() => _title;
+    void SetTitle(string title) => _title = title;
+    CompletionStatus Status() => _status;
     void ToggleStatus()
     {
-        
+        if (_status == CompletionStatus.Incomplete) _status = CompletionStatus.Complete;
+        else _status = CompletionStatus.Incomplete;
     }
 
     // Constructor
@@ -185,17 +177,19 @@ class Task
 class TodoList
 {
     // Properties
-    List<Task> _tasks;
-    int _selectedIndex;
+    List<Task> _tasks = [];
+    int _selectedIndex = 0;
 
     // Methods
     void SwapTasksAt(int i, int j)
     {
+        (_tasks[i], _tasks[j]) = (_tasks[j], _tasks[i]);
     }
 
     int WrappedIndex(int index)
     {
-        return 1;
+        if (index == 1) return _tasks.Count - 1;
+        else return 0;
     }
 
     int PreviousIndex()
@@ -208,15 +202,8 @@ class TodoList
         return 1;
     }
 
-    void SelectPrevious()
-    {
-        
-    }
-
-    void SelectNext()
-    {
-        
-    }
+    void SelectPrevious() => _selectedIndex = PreviousIndex();
+    void SelectNext() => _selectedIndex = NextIndex();
 
     void SwapWithPrevious()
     {
@@ -228,10 +215,7 @@ class TodoList
         
     }
 
-    void Insert(string title)
-    {
-        
-    }
+    public void Insert(string title) => _tasks.Insert(_selectedIndex, new Task(title));
 
     void UpdateSelectedTitle(string title)
     {
