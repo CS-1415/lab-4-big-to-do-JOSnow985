@@ -131,6 +131,8 @@
                 //     break;
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
+                    if (_tasks.Length == 0)     // Need to check if _tasks has a Task before calling ToggleStatus on it
+                        break;
                     _tasks.CurrentTask.ToggleStatus();
                     break;
                 // case ConsoleKey.Delete:
