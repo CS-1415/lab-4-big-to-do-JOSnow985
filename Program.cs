@@ -127,9 +127,9 @@
                     if (_tasks.Length != 0)     // Need to check if _tasks has a Task before calling something on it
                         _tasks.CurrentTask.Title = GetTitle();
                     break;
-                // case ConsoleKey.H:
-                //     _showHelp = !_showHelp;
-                //     break;
+                case ConsoleKey.H:
+                    _showHelp = !_showHelp;
+                    break;
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
                     if (_tasks.Length != 0)
