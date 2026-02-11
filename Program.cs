@@ -191,7 +191,7 @@ class TodoList
     // Methods
     void SwapTasksAt(int i, int j)
     {
-        if (Length < 2)
+        if (Length < 2) // Don't try to swap tasks if there's not enough to swap
             return;
         (_tasks[i], _tasks[j]) = (_tasks[j], _tasks[i]);
     }
@@ -229,10 +229,7 @@ class TodoList
 
     public void Insert(string title) => _tasks.Insert(_selectedIndex, new Task(title));
 
-    void UpdateSelectedTitle(string title)
-    {
-        
-    }
+    // void UpdateSelectedTitle(string title) {}    // Remove or Implement if needed, depending on code review
     public void DeleteSelected()
     {
         _tasks.RemoveAt(_selectedIndex);
