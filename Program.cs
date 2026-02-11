@@ -129,10 +129,10 @@
                 // case ConsoleKey.H:
                 //     _showHelp = !_showHelp;
                 //     break;
-                // case ConsoleKey.Enter:
-                // case ConsoleKey.Spacebar:
-                //     _tasks.CurrentTask.ToggleStatus();
-                //     break;
+                case ConsoleKey.Enter:
+                case ConsoleKey.Spacebar:
+                    _tasks.CurrentTask.ToggleStatus();
+                    break;
                 // case ConsoleKey.Delete:
                 // case ConsoleKey.Backspace:
                 //     _tasks.DeleteSelected();
@@ -159,7 +159,7 @@ class Task
 
 
     // Methods
-    void ToggleStatus()
+    public void ToggleStatus()
     {
         if (_status == CompletionStatus.NotDone) _status = CompletionStatus.Done;
         else _status = CompletionStatus.NotDone;
