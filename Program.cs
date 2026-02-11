@@ -41,14 +41,13 @@
     // Creates a string with variable components for a task in the list using a provided index
     public string MakeRow(int i)
     {
-        // Task task = _tasks.GetTask(i);
+        Task task = _tasks.GetTask(i);
         string arrow = "  ";
         // If the task we're drawing matches the CurrentTask variable, add an arrow to the draw
-        // if (task == _tasks.CurrentTask) arrow = "->";
+        if (task == _tasks.CurrentTask) arrow = "->";
         string check = " ";
-        // if (task.Status == CompletionStatus.Done) check = "X";
-        // return $"{arrow} [{check}] {task.Title}";
-        return $"{arrow} [{check}]";
+        if (task.Status == Task.CompletionStatus.Done) check = "X";     // Needed to added Task for the enumeration to work
+        return $"{arrow} [{check}] {task.Title}";
     }
 
     // Calls MakeRow on every task in the list, passing the task's index to MakeRow
@@ -56,10 +55,10 @@
     {
         DisplayBar();
         Console.WriteLine("Tasks:");
-        // for (int i = 0; i < _tasks.Length; i++)
-        // {
-        //     Console.WriteLine(MakeRow(i));
-        // }
+        for (int i = 0; i < _tasks.Length; i++)
+        {
+            Console.WriteLine(MakeRow(i));
+        }
         DisplayBar();
     }
 
@@ -77,7 +76,7 @@
         DisplayBar();
     }
 
-    // Collects user input for the task title, validated in ProcessUserInput()
+    // Collects user input for the task title
     private string GetTitle()
     {
         Console.WriteLine("Please enter task title (or [enter] for none): ");
@@ -109,18 +108,18 @@
                 case ConsoleKey.Escape:
                     _quit = true;
                     break;
-                // case ConsoleKey.UpArrow:
-                //     _tasks.SelectPrevious();
-                //     break;
-                // case ConsoleKey.DownArrow:
-                //     _tasks.SelectNext();
-                //     break;
-                // case ConsoleKey.LeftArrow:
-                //     _tasks.SwapWithPrevious();
-                //     break;
-                // case ConsoleKey.RightArrow:
-                //     _tasks.SwapWithNext();
-                //     break;
+                case ConsoleKey.UpArrow:
+                    _tasks.SelectPrevious();
+                    break;
+                case ConsoleKey.DownArrow:
+                    _tasks.SelectNext();
+                    break;
+                case ConsoleKey.LeftArrow:
+                    _tasks.SwapWithPrevious();
+                    break;
+                case ConsoleKey.RightArrow:
+                    _tasks.SwapWithNext();
+                    break;
                 case ConsoleKey.I:
                     _insertMode = true;
                     break;
@@ -149,28 +148,32 @@
 class Task
 {
     // Properties
-    string _title;
+    private string _title;  // Field
+    public string Title     // Property for _title field, Replaced Title() and SetTitle() methods
+    {
+        get => _title;
+        set => _title = value;
+    }
     CompletionStatus _status;
+    public CompletionStatus Status => _status;
+
 
     // Methods
-    string Title() => _title;
-    void SetTitle(string title) => _title = title;
-    CompletionStatus Status() => _status;
     void ToggleStatus()
     {
-        if (_status == CompletionStatus.Incomplete) _status = CompletionStatus.Complete;
-        else _status = CompletionStatus.Incomplete;
+        if (_status == CompletionStatus.NotDone) _status = CompletionStatus.Done;
+        else _status = CompletionStatus.NotDone;
     }
 
     // Constructor
     public Task(string title)
     {
         _title = title;
-        _status = CompletionStatus.Incomplete;
+        _status = CompletionStatus.NotDone;
     }
 
     // Enumeration
-    enum CompletionStatus {Incomplete, Complete}
+    public enum CompletionStatus {NotDone, Done}
 }
 
 // Barebones TodoList class
@@ -179,6 +182,8 @@ class TodoList
     // Properties
     List<Task> _tasks = [];
     int _selectedIndex = 0;
+    public Task CurrentTask => GetTask(_selectedIndex);  
+    public int Length => _tasks.Count;
 
     // Methods
     void SwapTasksAt(int i, int j)
@@ -186,34 +191,37 @@ class TodoList
         (_tasks[i], _tasks[j]) = (_tasks[j], _tasks[i]);
     }
 
+    // Returns an index that may or may not be wrapped depending on the index we ask for
     int WrappedIndex(int index)
     {
-        if (index == 1) return _tasks.Count - 1;
-        else return 0;
+        int count = _tasks.Count;
+        // Check if our list is empty first
+        if (count == 0) 
+            return -1;
+        // If our intended index is greater or equal to count, wrap back to 0
+        if (index >= count)
+            return 0;
+        // If our intended index is less than 0, wrap to the end of the list
+        else if (index < 0)
+            return count - 1;
+        // Otherwise we can return the intended index unmodified
+        else
+            return index;
     }
 
-    int PreviousIndex()
-    {
-        return 1;
-    }
+    // These two pass an intended index to WrappedIndex to return a potentially wrapped index
+    int PreviousIndex() => WrappedIndex(_selectedIndex - 1);
 
-    int NextIndex()
-    {
-        return 1;
-    }
+    int NextIndex() => WrappedIndex(_selectedIndex + 1);
 
-    void SelectPrevious() => _selectedIndex = PreviousIndex();
-    void SelectNext() => _selectedIndex = NextIndex();
+    // Changes _selectedIndex to a target index
+    public void SelectPrevious() => _selectedIndex = PreviousIndex();
+    public void SelectNext() => _selectedIndex = NextIndex();
 
-    void SwapWithPrevious()
-    {
-        
-    }
+    // Calls SwapTasksAt with _selectedIndex and either the previous or the next index
+    public void SwapWithPrevious() => SwapTasksAt(_selectedIndex, PreviousIndex());
 
-    void SwapWithNext()
-    {
-        
-    }
+    public void SwapWithNext() => SwapTasksAt(_selectedIndex, NextIndex());
 
     public void Insert(string title) => _tasks.Insert(_selectedIndex, new Task(title));
 
@@ -222,33 +230,19 @@ class TodoList
         
     }
 
-    int Length()
-    {
-        return 1;
-    }
-
     void DeleteSelected()
     {
         
     }
 
-    Task CurrentTask()
-    {
-        return new Task("Title");
-    }
 
-    Task GetTask(int index)
-    {
-        return new Task("Title");
-    }
-    // Constructor
-    // Enumeration
+    public Task GetTask(int index) => _tasks[index];
 }
 
 class Program
 {
     static void Main()
     {
-        // new TodoListApp(new TodoList()).Run();
+        new TodoListApp(new TodoList()).Run();
     }
 }

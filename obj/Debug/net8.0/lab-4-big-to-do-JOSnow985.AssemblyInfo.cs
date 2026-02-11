@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("lab-4-big-to-do-JOSnow985")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8e0018574d855d0c8700013091ef65d1b16e8370")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10b82deda48f347cd50422032fd9f683a22ac6d7")]
 [assembly: System.Reflection.AssemblyProductAttribute("lab-4-big-to-do-JOSnow985")]
 [assembly: System.Reflection.AssemblyTitleAttribute("lab-4-big-to-do-JOSnow985")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
