@@ -123,9 +123,9 @@
                 case ConsoleKey.I:
                     _insertMode = true;
                     break;
-                // case ConsoleKey.E:
-                //     _tasks.CurrentTask.Title = GetTitle();
-                //     break;
+                case ConsoleKey.E:
+                    _tasks.CurrentTask.Title = GetTitle();
+                    break;
                 // case ConsoleKey.H:
                 //     _showHelp = !_showHelp;
                 //     break;
@@ -149,7 +149,7 @@ class Task
 {
     // Properties
     private string _title;  // Field
-    public string Title     // Property for _title field, Replaced Title() and SetTitle() methods
+    public string Title     // Property for _title field, Replaced Title() and SetTitle() methods to match TodoListApp code
     {
         get => _title;
         set => _title = value;
