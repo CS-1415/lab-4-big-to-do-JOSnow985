@@ -124,21 +124,22 @@
                     _insertMode = true;
                     break;
                 case ConsoleKey.E:
-                    _tasks.CurrentTask.Title = GetTitle();
+                    if (_tasks.Length != 0)     // Need to check if _tasks has a Task before calling something on it
+                        _tasks.CurrentTask.Title = GetTitle();
                     break;
                 // case ConsoleKey.H:
                 //     _showHelp = !_showHelp;
                 //     break;
                 case ConsoleKey.Enter:
                 case ConsoleKey.Spacebar:
-                    if (_tasks.Length == 0)     // Need to check if _tasks has a Task before calling ToggleStatus on it
-                        break;
-                    _tasks.CurrentTask.ToggleStatus();
+                    if (_tasks.Length != 0)
+                        _tasks.CurrentTask.ToggleStatus();
                     break;
-                // case ConsoleKey.Delete:
-                // case ConsoleKey.Backspace:
-                //     _tasks.DeleteSelected();
-                //     break;
+                case ConsoleKey.Delete:
+                case ConsoleKey.Backspace:
+                    if (_tasks.Length != 0)
+                        _tasks.DeleteSelected();
+                    break;
                 default:
                     break;
             }
@@ -232,13 +233,11 @@ class TodoList
     {
         
     }
-
-    void DeleteSelected()
+    public void DeleteSelected()
     {
-        
+        _tasks.RemoveAt(_selectedIndex);
+        SelectPrevious();   // Task at _selectedIndex doesn't exist anymore, so we want to make sure we don't leave it out of range
     }
-
-
     public Task GetTask(int index) => _tasks[index];
 }
 
