@@ -181,13 +181,15 @@ class TodoList
 {
     // Properties
     List<Task> _tasks = [];
-    int _selectedIndex = 0;
+    public int _selectedIndex = 0;
     public Task CurrentTask => GetTask(_selectedIndex);  
     public int Length => _tasks.Count;
 
     // Methods
     void SwapTasksAt(int i, int j)
     {
+        if (Length < 2)
+            return;
         (_tasks[i], _tasks[j]) = (_tasks[j], _tasks[i]);
     }
 
@@ -197,7 +199,7 @@ class TodoList
         int count = _tasks.Count;
         // Check if our list is empty first
         if (count == 0) 
-            return -1;
+            return 0;
         // If our intended index is greater or equal to count, wrap back to 0
         if (index >= count)
             return 0;
@@ -220,7 +222,6 @@ class TodoList
 
     // Calls SwapTasksAt with _selectedIndex and either the previous or the next index
     public void SwapWithPrevious() => SwapTasksAt(_selectedIndex, PreviousIndex());
-
     public void SwapWithNext() => SwapTasksAt(_selectedIndex, NextIndex());
 
     public void Insert(string title) => _tasks.Insert(_selectedIndex, new Task(title));
